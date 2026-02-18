@@ -4,12 +4,13 @@
 <meta charset="UTF-8">
 <title>Application Form</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="animations.css">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <h2>Application Form</h2>
-<button onclick="logout()" style="float: right; background: #ff4d4d; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; font-weight: bold;">
+<button onclick="logout()" style="float: right; background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%); color: white; border: none; padding: 12px 18px; border-radius: 10px; cursor: pointer; font-weight: bold; box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4); transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 6px 20px rgba(255, 107, 107, 0.6)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(255, 107, 107, 0.4)'">
     Log Out 🔓
 </button>
 <form id="appForm">
@@ -39,7 +40,7 @@
   <select id="bridge">
     <option value="">Select Bridge</option>
   </select>
-      <button type="button" id="addBridgeBtn">➕ Add Bridge</button>
+      <button type="button" id="addBridgeBtn" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; border: none; padding: 10px 14px; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 3px 10px rgba(16, 185, 129, 0.3);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 5px 15px rgba(16, 185, 129, 0.5)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 3px 10px rgba(16, 185, 129, 0.3)'">➕ Add Bridge</button>
   </div>
 
   <select id="status">
@@ -97,10 +98,4 @@
 </div>
 <script src="app.js"></script>
 </body>
-
-</html>  
-
-
-
-
-
+</html>
