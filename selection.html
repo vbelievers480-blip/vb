@@ -6,42 +6,280 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body{ margin:0; padding:0; background:#dcdcdc; font-family:"Times New Roman", serif; }
-
-/* A4 Sheet Layout */
-.letter{
-  width:210mm; height:297mm; margin:15mm auto; background:#e6e3d9; 
-  position:relative; box-sizing:border-box; padding:18mm;
+/* ===== ANIMATED BACKGROUND ===== */
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+    font-family: "Times New Roman", serif;
 }
 
-/* INNER PAGE BORDER */
-.inner-border{ position:absolute; top:14mm; left:14mm; right:14mm; bottom:14mm; pointer-events:none; }
-.inner-border::before{ content:""; position:absolute; top:0; left:0; right:0; bottom:0; border:2px solid #000; }
-.inner-border::after{ content:""; position:absolute; top:2mm; left:2mm; right:2mm; bottom:2mm; border:1.5px solid #000; }
-
-/* WATERMARK */
-.watermark{
-  position:absolute; inset:0; top:10%; bottom:30%; 
-  background:url("watermark.png") center center no-repeat;
-  background-size:520px; opacity:0.20; z-index:1;
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
-.email-btn{ position:fixed; top:60px; right:15px; padding:10px 18px; background:#1a4cff; color:#fff; border:none; border-radius:6px; cursor:pointer; font-size:14px; z-index:100; }
-.print-btn{ position:fixed; top:15px; right:15px; padding:10px 18px; background:#000; color:#fff; border:none; border-radius:6px; cursor:pointer; font-size:14px; z-index:100; }
-
-@media print{
-  .email-btn, .print-btn{ display:none; }
-  @page{ size:A4; margin:0; }
-  body{ background:#fff; }
-  .letter{ margin:0; }
+/* ===== A4 SHEET WITH ENTRANCE ANIMATION ===== */
+.letter {
+    width: 210mm;
+    height: 297mm;
+    margin: 15mm auto;
+    background: #ffffff;
+    position: relative;
+    box-sizing: border-box;
+    padding: 18mm;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    animation: slideInLetter 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.content{ position:relative; z-index:2; font-size:16px; line-height:1.7; }
-h1{ text-align:center; font-size:28px; letter-spacing:1.5px; text-decoration:underline; margin:0 0 10px 0; }
-.heading{ font-weight:bold; text-decoration:underline; margin-top:10px; }
-p{ margin:6px 0 6px 8px; text-align:justify; }
-.footer{ margin-top:50px; text-align:right; }
-.map-link{ color:#000; text-decoration:underline; font-weight:bold; }
+@keyframes slideInLetter {
+    from {
+        opacity: 0;
+        transform: translateY(50px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ===== INNER PAGE BORDER ===== */
+.inner-border {
+    position: absolute;
+    top: 14mm;
+    left: 14mm;
+    right: 14mm;
+    bottom: 14mm;
+    pointer-events: none;
+    animation: borderExpand 1s ease-out;
+}
+
+@keyframes borderExpand {
+    from {
+        top: 50%;
+        left: 50%;
+        right: 50%;
+        bottom: 50%;
+    }
+    to {
+        top: 14mm;
+        left: 14mm;
+        right: 14mm;
+        bottom: 14mm;
+    }
+}
+
+.inner-border::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 2px solid #000;
+}
+
+.inner-border::after {
+    content: "";
+    position: absolute;
+    top: 2mm;
+    left: 2mm;
+    right: 2mm;
+    bottom: 2mm;
+    border: 1.5px solid #000;
+}
+
+/* ===== WATERMARK ===== */
+.watermark {
+    position: absolute;
+    inset: 0;
+    top: 10%;
+    bottom: 30%;
+    background: url("watermark.png") center center no-repeat;
+    background-size: 520px;
+    opacity: 0.20;
+    z-index: 1;
+    animation: fadeIn 2s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 0.20; }
+}
+
+/* ===== FLOATING ACTION BUTTONS ===== */
+.email-btn, .print-btn {
+    position: fixed;
+    right: 15px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    z-index: 100;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    animation: slideInRight 0.6s ease-out;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.print-btn {
+    top: 15px;
+    background: linear-gradient(135deg, #000000 0%, #434343 100%);
+    color: #fff;
+}
+
+.email-btn {
+    top: 65px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    animation-delay: 0.1s;
+}
+
+.print-btn::before, .email-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.print-btn:hover::before, .email-btn:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.print-btn:hover, .email-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+}
+
+.print-btn:active, .email-btn:active {
+    transform: translateY(-1px);
+}
+
+/* ===== HIDE BUTTONS ON PRINT ===== */
+@media print {
+    .email-btn, .print-btn { display: none; }
+    @page { size: A4; margin: 0; }
+    body { background: #fff; }
+    .letter { margin: 0; box-shadow: none; }
+}
+
+/* ===== CONTENT WITH STAGGER ANIMATION ===== */
+.content {
+    position: relative;
+    z-index: 2;
+    font-size: 16px;
+    line-height: 1.7;
+}
+
+.content > * {
+    animation: fadeInUp 0.6s ease-out backwards;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.content > *:nth-child(1) { animation-delay: 0.2s; }
+.content > *:nth-child(2) { animation-delay: 0.3s; }
+.content > *:nth-child(3) { animation-delay: 0.4s; }
+.content > *:nth-child(4) { animation-delay: 0.5s; }
+.content > *:nth-child(5) { animation-delay: 0.6s; }
+.content > *:nth-child(6) { animation-delay: 0.7s; }
+.content > *:nth-child(7) { animation-delay: 0.8s; }
+.content > *:nth-child(8) { animation-delay: 0.9s; }
+.content > *:nth-child(9) { animation-delay: 1s; }
+.content > *:nth-child(10) { animation-delay: 1.1s; }
+
+h1 {
+    text-align: center;
+    font-size: 28px;
+    letter-spacing: 1.5px;
+    text-decoration: underline;
+    margin: 0 0 10px 0;
+}
+
+.heading {
+    font-weight: bold;
+    text-decoration: underline;
+    margin-top: 10px;
+}
+
+p {
+    margin: 6px 0 6px 8px;
+    text-align: justify;
+}
+
+.footer {
+    margin-top: 50px;
+    text-align: right;
+}
+
+.map-link {
+    color: #000;
+    text-decoration: underline;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.map-link:hover {
+    color: #667eea;
+    transform: translateX(5px);
+}
+
+/* ===== LOADING SPINNER ===== */
+.loading-spinner {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 60px;
+    border: 6px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #667eea;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    z-index: 1000;
+}
+
+@keyframes spin {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.loading-spinner.active {
+    display: block;
+}
 </style>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -52,6 +290,8 @@ p{ margin:6px 0 6px 8px; text-align:justify; }
 
 <button class="print-btn" onclick="window.print()">🖨 Print Letter</button>
 <button class="email-btn" onclick="sendEmail()">✉ Send PDF via Email</button>
+
+<div class="loading-spinner" id="loadingSpinner"></div>
 
 <div class="letter">
   <div class="inner-border"></div>
@@ -125,7 +365,6 @@ window.onload = function() {
         console.error("Invalid letterData in localStorage", e);
     }
 
-    // ✅ FIXED: Properly closed function
     function formatDate(dateStr) {
         if (!dateStr || !dateStr.includes("-")) return dateStr || "DD-MM-YYYY";
         const [year, month, day] = dateStr.split("-");
@@ -148,18 +387,16 @@ window.onload = function() {
         "Hyderabad2": "https://maps.app.goo.gl/B5taGhyEiw2aBg66A",
         "Kalahasthi": "https://maps.app.goo.gl/UowCoAtHoXbLeKDf6"
     };
-  const mapLinkEl = document.getElementById("mapLink");
-mapLinkEl.href = mapLinks[data.branch] || "https://www.google.com/maps";
-mapLinkEl.innerText = "📍 View Training Location on Google Maps";
-document.getElementById("map1").href = mapLinks.Kurnool;
-document.getElementById("map2").href = mapLinks.Hyderabad1;
-document.getElementById("map3").href = mapLinks.Hyderabad2;
-document.getElementById("map5").href = mapLinks.Kalahasthi;
+    
+    const mapLinkEl = document.getElementById("mapLink");
+    mapLinkEl.href = mapLinks[data.branch] || "https://www.google.com/maps";
+    mapLinkEl.innerText = "📍 View Training Location on Google Maps";
 };
 
-// 📧 SEND EMAIL FUNCTION
+// 📧 SEND EMAIL FUNCTION WITH LOADING ANIMATION
 async function sendEmail() {
     const btn = document.querySelector(".email-btn");
+    const spinner = document.getElementById("loadingSpinner");
 
     if (!window.currentEmail) {
         alert("❌ Error: No email found for this applicant.");
@@ -168,6 +405,7 @@ async function sendEmail() {
 
     btn.innerText = "⏳ Generating PDF...";
     btn.disabled = true;
+    spinner.classList.add('active');
 
     try {
         const { jsPDF } = window.jspdf;
@@ -178,14 +416,11 @@ async function sendEmail() {
 
         const pdf = new jsPDF('p', 'mm', 'a4');
         pdf.addImage(imgData, 'JPEG', 0, 0, 210, 297);
-      // 🔗 Make map link clickable in PDF
-const mapUrl = document.getElementById("mapLink").href;
-
-// x, y, width, height (adjust if needed)
-pdf.link(70, 210, 70, 8, { url: mapUrl });
+        
+        const mapUrl = document.getElementById("mapLink").href;
+        pdf.link(70, 210, 70, 8, { url: mapUrl });
 
         const pdfBase64 = pdf.output('datauristring');
-
         const name = document.getElementById("name").innerText;
 
         const response = await fetch('/api/send-mail', {
@@ -211,19 +446,10 @@ pdf.link(70, 210, 70, 8, { url: mapUrl });
     } finally {
         btn.innerText = "✉ Send PDF via Email";
         btn.disabled = false;
+        spinner.classList.remove('active');
     }
 }
 </script>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
