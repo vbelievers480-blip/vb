@@ -45,7 +45,10 @@ body {
         transform: translateY(0) scale(1);
     }
 }
-
+.no-animate *, .no-animate {
+    animation: none !important;
+    transition: none !important;
+}
 /* ===== INNER PAGE BORDER ===== */
 .inner-border {
     position: absolute;
@@ -411,7 +414,22 @@ async function sendEmail() {
         const { jsPDF } = window.jspdf;
         const element = document.querySelector(".letter");
 
-        const canvas = await html2canvas(element, { scale: 2, useCORS: true });
+// freeze layout
+document.body.classList.add("no-animate");
+
+// force full height
+element.style.height = element.scrollHeight + "px";
+
+const canvas = await html2canvas(element, {
+    scale: 2,
+    useCORS: true,
+    windowWidth: element.scrollWidth,
+    windowHeight: element.scrollHeight
+});
+
+// restore
+element.style.height = "";
+document.body.classList.remove("no-animate");
         const imgData = canvas.toDataURL('image/jpeg', 0.7);
 
         const pdf = new jsPDF('p', 'mm', 'a4');
@@ -453,4 +471,5 @@ async function sendEmail() {
 
 </body>
 </html>
+
 
